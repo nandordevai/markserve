@@ -68,6 +68,7 @@ a {
 
 main {
     max-width: 45rem;
+    padding-bottom: 10rem;
 }
 
 blockquote {
@@ -113,5 +114,37 @@ img {
         &.active {
             border-bottom: 4px solid hsla(0, 0, 60%, 1);
         }
+    }
+}
+
+hr {
+    background: hsla(0, 0%, 0%, 1);
+    background-image: linear-gradient(to right, white, black 20%, black 80%, white 100%);
+    border: 0;
+    height: 1px;
+    margin: 38px 0 39px;
+
+    &::after {
+        background: white;
+        content: "\02736";
+        display: inline-block;
+        font-size: 18px;
+        left: 49%;
+        padding: 0 0.5em;
+        position: relative;
+        top: -12px;
+    }
+}
+
+.end {
+    font-size: 16px;
+    padding-top: 40px;
+    text-align: center;
+
+    span {
+        font-size: 24px;
+        padding: 5px;
+        position: relative;
+        top: 3px;
     }
 }
