@@ -1,8 +1,9 @@
-import markdown
 import codecs
 import os
 
-from flask import Flask, render_template, url_for, redirect
+import markdown
+from markdown.extensions.wikilinks import WikiLinkExtension
+from flask import Flask, render_template, url_for, redirect, abort
 
 app = Flask(__name__)
 debug = True
@@ -14,7 +15,7 @@ app.config.update(
 
 
 def get_filename(page):
-    return os.path.join(app.config['DATADIR'], page + '.md')
+    return os.path.join(app.config['DATADIR'], page.replace('_', ' ') + '.md')
 
 
 @ app.route('/', methods=['GET'])
@@ -24,12 +25,15 @@ def index():
 
 @ app.route('/<page>', methods=['GET'])
 def show_page(page):
+    file = get_filename(page)
+    if not os.path.exists(file):
+        abort(404)
     try:
-        content = codecs.open(get_filename(page), 'r', 'utf-8').read()
+        content = codecs.open(file, 'r', 'utf-8').read()
     except IOError:
-        content = None
-    # , pages=get_pages())
-    html = markdown.markdown(content, extensions=['wikilinks'])
+        abort(500)
+    html = markdown.markdown(content, extensions=[
+                             WikiLinkExtension(end_url='')])
     return render_template('page.html', title=page, content=html)
 
 
