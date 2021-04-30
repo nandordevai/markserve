@@ -2,21 +2,50 @@ body {
   display: flex;
   flex-direction: row;
   font-family: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  line-height: 150%;
+  line-height: 26px;
   padding: 0;
   margin: 0;
 }
 
 nav,
 main {
-  padding: 1rem 3rem;
+  padding: 26px 3rem;
+}
+
+p {
+  margin: 0;
 }
 
 h1 {
-  margin-top: 0;
+  font-size: 32px;
+  margin-bottom: 31px;
+  margin-top: 2px;
+}
+
+h2 {
+  border-bottom: 1px solid black;
+  font-size: 24px;
+  font-variant: small-caps;
+  margin-bottom: 27px;
+  margin-top: 24px;
+}
+
+h3 {
+  font-size: 18.7px;
+  margin-bottom: 0;
+  margin-top: 26px;
+}
+
+h4 {
+  font-size: 16px;
+  font-variant: small-caps;
+  font-weight: normal;
+  margin-bottom: 0;
+  margin-top: 26px;
 }
 
 nav {
+  padding-top: 7px;
   width: 10rem;
 }
 nav a {
@@ -29,14 +58,15 @@ a {
 
 main {
   max-width: 45rem;
-  padding-top: 2rem;
 }
 
 blockquote {
   background: #fafafa;
   border: 2px solid #a6a6a6;
   margin: 0;
-  padding: 1rem;
+  margin-bottom: 25px;
+  margin-top: 25px;
+  padding: 25px;
 }
 blockquote p {
   margin: 0;
@@ -55,12 +85,14 @@ img[alt=s] {
 
 .tagselector {
   display: flex;
-  margin-top: 1rem;
-  padding-left: 1rem;
+  height: 52px;
+  margin-left: 26px;
+  margin-top: 26px;
 }
 .tagselector span {
   cursor: pointer;
   display: inline-block;
+  height: 26px;
   padding: 0.5rem 1rem;
   width: 3rem;
 }

@@ -22,13 +22,13 @@
             {% endfor %}
         </nav>
         <nav class="pagelist hidden">
-            {% for page in pages %}
+            {% for page in all_pages %}
             <a href="/{{page}}">{{page}}</a>
             {% endfor %}
         </nav>
     </aside>
     <main>
-        <h1>Pages with tag "{{tag}}"</h1>
+        <h1>"{{tag}}"</h1>
         {% for page in pages %}
         <p><a href="/{{page}}">{{page}}</a></p>
         {% endfor %}

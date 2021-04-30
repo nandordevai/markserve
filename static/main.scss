@@ -2,27 +2,61 @@ $system-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubu
     "Helvetica Neue", sans-serif;
 $system-serif: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times,
     "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$line-height: 26px;
+$blockquote-border: 2px;
 
 body {
+    // background: linear-gradient(to bottom, rgba(32, 160, 255, 0.35) 1px, transparent 1px);
+    // background-size: 100% 26px;
     display: flex;
     flex-direction: row;
     font-family: $system-serif;
-    line-height: 150%;
+    line-height: $line-height;
     padding: 0;
     margin: 0;
 }
 
 nav,
 main {
-    padding: 1rem 3rem;
+    padding: $line-height 3rem;
+}
+
+p {
+    margin: 0;
 }
 
 h1 {
-    margin-top: 0;
+    font-size: 32px;
+    margin-bottom: 31px;
+    margin-top: 2px;
+}
+
+h2 {
+    border-bottom: 1px solid black;
+    font-size: 24px;
+    font-variant: small-caps;
+    margin-bottom: 27px;
+    margin-top: 24px;
+}
+
+h3 {
+    font-size: 18.7px;
+    margin-bottom: 0;
+    margin-top: $line-height;
+}
+
+h4 {
+    font-size: 16px;
+    font-variant: small-caps;
+    font-weight: normal;
+    margin-bottom: 0;
+    margin-top: $line-height;
 }
 
 nav {
+    padding-top: 7px;
     width: 10rem;
+
     a {
         display: block;
     }
@@ -34,14 +68,15 @@ a {
 
 main {
     max-width: 45rem;
-    padding-top: 2rem;
 }
 
 blockquote {
     background: hsla(0, 0%, 98%, 1);
-    border: 2px solid hsla(0, 0%, 65%, 1);
+    border: $blockquote-border solid hsla(0, 0%, 65%, 1);
     margin: 0;
-    padding: 1rem;
+    margin-bottom: $line-height - $blockquote-border / 2;
+    margin-top: $line-height - $blockquote-border / 2;
+    padding: $line-height - $blockquote-border / 2;
 
     p {
         margin: 0;
@@ -64,12 +99,14 @@ img {
 
 .tagselector {
     display: flex;
-    margin-top: 1rem;
-    padding-left: 1rem;
+    height: 2 * $line-height;
+    margin-left: $line-height;
+    margin-top: $line-height;
 
     span {
         cursor: pointer;
         display: inline-block;
+        height: $line-height;
         padding: 0.5rem 1rem;
         width: 3rem;
 

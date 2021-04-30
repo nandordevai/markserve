@@ -94,7 +94,8 @@ def show_page(page):
 @app.route('/tag/<tag>', methods=['GET'])
 def show_tags(tag):
     return render_template('tag.html', title='Tag: {}'.format(tag),
-                           tag=tag, pages=get_pages_for_tag(tag), tags=get_tags())
+                           tag=tag, pages=get_pages_for_tag(tag), tags=get_tags(),
+                           all_pages=get_pages())
 
 
 if __name__ == '__main__':
