@@ -18,6 +18,12 @@ def get_filename(page):
     return os.path.join(app.config['DATADIR'], page.replace('_', ' ') + '.md')
 
 
+def get_pages():
+    return [file[:-3]
+            for file in sorted(os.listdir(app.config['DATADIR']))
+            if file.endswith('.md')]
+
+
 @ app.route('/', methods=['GET'])
 def index():
     return redirect(url_for('show_page', page='Index'))
@@ -34,7 +40,7 @@ def show_page(page):
         abort(500)
     html = markdown.markdown(content, extensions=[
                              WikiLinkExtension(end_url='')])
-    return render_template('page.html', title=page, content=html)
+    return render_template('page.html', title=page, content=html, pages=get_pages())
 
 
 if __name__ == '__main__':

@@ -10,7 +10,16 @@
 </head>
 
 <body>
-    {{content|safe}}
+    <nav>
+        {% for page in pages %}
+        <a href="/{{page}}">{{page}}</a>
+        {% endfor %}
+    </nav>
+
+    <main>
+        {{content|safe}}
+    </main>
+
 </body>
 
 </html>
