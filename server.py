@@ -1,5 +1,6 @@
 import codecs
 import os
+from functools import reduce
 
 import markdown
 from markdown.extensions.wikilinks import WikiLinkExtension
@@ -24,39 +25,16 @@ def add_file_entry(name):
         return {'name': name, 'children': []}
 
 
-def get_tree(start=app.config['DATADIR']):
-    # os.walk() output:
-    # /Users/nandi/Projects/Web/markserve/data ['things'] ['Index.md', 'wiki link.md']
-    # /Users/nandi/Projects/Web/markserve/data/things [] ['one thing.md']
-    # convert to:
-    # [
-    #   {
-    #     'name': 'things',
-    #     'children': [
-    #       {
-    #         'name': 'one thing',
-    #         'children': None
-    #       }
-    #     ]
-    #   },
-    #   {
-    #     'name': 'Index',
-    #     'children': None
-    #   },
-    #   {
-    #     'name': 'wiki link',
-    #     'children': None
-    #   }
-    # ]
-    items = []
-    for root, dirs, files in os.walk(start):
-        if len(dirs) > 0:
-            for d in dirs:
-                items.append({'name': d, 'children': get_tree(root)})
-        if len(files) > 0:
-            for f in files:
-                items.append({'name': f, 'children': None})
-    return items
+def get_tree(rootdir=app.config['DATADIR']):
+    dir = {}
+    rootdir = rootdir.rstrip(os.sep)
+    start = rootdir.rfind(os.sep) + 1
+    for path, dirs, files in os.walk(rootdir):
+        folders = path[start:].split(os.sep)
+        subdir = dict.fromkeys([f[:-3] for f in files])
+        parent = reduce(dict.get, folders[:-1], dir)
+        parent[folders[-1]] = subdir
+    return dir[rootdir]
 
 
 def get_pages():
@@ -80,7 +58,7 @@ def show_page(page):
         abort(500)
     html = markdown.markdown(content, extensions=[
                              WikiLinkExtension(end_url=''), 'tables'])
-    return render_template('page.html', title=page, content=html, pages=get_pages())
+    return render_template('page.html', title=page, content=html, pages=get_tree())
 
 
 if __name__ == '__main__':

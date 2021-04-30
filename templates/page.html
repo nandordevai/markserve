@@ -11,11 +11,14 @@
 
 <body>
     <nav>
-        {% for page in pages %}
-        {% if page.children == None %}
-        <a href="/{{page.name}}">{{page.name}}</a>
+        {% for name, children in pages.items() recursive %}
+        {% if children == None %}
+        <a href="/{{name}}">{{name}}</a>
         {% else %}
-        <span>{{page.name}}</span>
+        <span class="directory">{{name}}</span>
+        <div class="subdir">
+            {{ loop(children.items()) }}
+        </div>
         {% endif %}
         {% endfor %}
     </nav>

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body {
   display: flex;
   flex-direction: row;
@@ -46,4 +47,12 @@ img[alt=xs] {
 }
 img[alt=s] {
   width: 250px;
+}
+
+.subdir {
+  padding-left: 1rem;
+}
+
+.directory::before {
+  content: "› ";
 }/*# sourceMappingURL=main.css.map */
