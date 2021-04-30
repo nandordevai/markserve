@@ -16,7 +16,7 @@ tags = {}
 
 
 def get_filename(page):
-    return os.path.join(app.config['DATADIR'], page.replace('_', ' ') + '.md')
+    return os.path.join(app.config['DATADIR'], '{}.md'.format(page))
 
 
 def add_file_entry(name):
@@ -65,6 +65,10 @@ def build_tag_db():
                     tags[tag].append(file[:-3])
 
 
+def url_builder(label, base, end):
+    return label
+
+
 @ app.route('/', methods=['GET'])
 def index():
     return redirect(url_for('show_page', page='Index'))
@@ -80,7 +84,9 @@ def show_page(page):
     except IOError:
         abort(500)
     html = markdown.markdown(content, extensions=[
-                             WikiLinkExtension(end_url=''), 'tables', 'meta'])
+                             WikiLinkExtension(
+                                 end_url='', build_url=url_builder),
+                             'tables', 'meta'])
     return render_template('page.html', title=page, content=html,
                            pages=get_pages(), tags=get_tags())
 
