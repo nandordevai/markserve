@@ -12,7 +12,11 @@
 <body>
     <nav>
         {% for page in pages %}
-        <a href="/{{page}}">{{page}}</a>
+        {% if page.children == None %}
+        <a href="/{{page.name}}">{{page.name}}</a>
+        {% else %}
+        <span>{{page.name}}</span>
+        {% endif %}
         {% endfor %}
     </nav>
 

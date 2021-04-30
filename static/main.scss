@@ -46,3 +46,13 @@ blockquote {
         margin: 0;
     }
 }
+
+img {
+    &[alt="xs"] {
+        width: 100px;
+    }
+
+    &[alt="s"] {
+        width: 250px;
+    }
+}
