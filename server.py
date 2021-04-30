@@ -12,6 +12,7 @@ app.config.update(
     DATADIR='data',
     DEBUG=debug
 )
+tags = {}
 
 
 def get_filename(page):
@@ -43,6 +44,27 @@ def get_pages():
             if file.endswith('.md')]
 
 
+def get_tags():
+    return tags.keys()
+
+
+def get_pages_for_tag(tag):
+    return tags[tag]
+
+
+def build_tag_db():
+    for file in os.listdir(app.config['DATADIR']):
+        if file.endswith('.md'):
+            content = codecs.open(os.path.join(
+                app.config['DATADIR'], file), 'r', 'utf-8').read()
+            md = markdown.Markdown(extensions=['meta'])
+            md.convert(content)
+            if 'tags' in md.Meta:
+                for tag in md.Meta['tags']:
+                    tags.setdefault(tag, [])
+                    tags[tag].append(file[:-3])
+
+
 @ app.route('/', methods=['GET'])
 def index():
     return redirect(url_for('show_page', page='Index'))
@@ -58,9 +80,17 @@ def show_page(page):
     except IOError:
         abort(500)
     html = markdown.markdown(content, extensions=[
-                             WikiLinkExtension(end_url=''), 'tables'])
-    return render_template('page.html', title=page, content=html, pages=get_pages())
+                             WikiLinkExtension(end_url=''), 'tables', 'meta'])
+    return render_template('page.html', title=page, content=html,
+                           pages=get_pages(), tags=get_tags())
+
+
+@app.route('/tag/<tag>', methods=['GET'])
+def show_tags(tag):
+    return render_template('tag.html', title='Tag: {}'.format(tag),
+                           tag=tag, pages=get_pages_for_tag(tag), tags=get_tags())
 
 
 if __name__ == '__main__':
+    build_tag_db()
     app.run(host='localhost')
