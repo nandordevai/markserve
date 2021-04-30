@@ -38,8 +38,9 @@ def get_tree(rootdir=app.config['DATADIR']):
 
 
 def get_pages():
-    return [add_file_entry(file)
-            for file in sorted(os.listdir(app.config['DATADIR']))]
+    return [file[:-3]
+            for file in sorted(os.listdir(app.config['DATADIR']))
+            if file.endswith('.md')]
 
 
 @ app.route('/', methods=['GET'])
@@ -58,7 +59,7 @@ def show_page(page):
         abort(500)
     html = markdown.markdown(content, extensions=[
                              WikiLinkExtension(end_url=''), 'tables'])
-    return render_template('page.html', title=page, content=html, pages=get_tree())
+    return render_template('page.html', title=page, content=html, pages=get_pages())
 
 
 if __name__ == '__main__':

@@ -56,13 +56,3 @@ img {
         width: 250px;
     }
 }
-
-.subdir {
-    padding-left: 1rem;
-}
-
-.directory {
-    &::before {
-        content: "› ";
-    }
-}
