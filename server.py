@@ -4,7 +4,7 @@ from functools import reduce
 
 import markdown
 from markdown.extensions.wikilinks import WikiLinkExtension
-from flask import Flask, render_template, url_for, redirect, abort
+from flask import Flask, render_template, url_for, redirect, abort, send_from_directory
 
 app = Flask(__name__)
 debug = True
@@ -69,12 +69,12 @@ def url_builder(label, base, end):
     return label
 
 
-@ app.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])
 def index():
     return redirect(url_for('show_page', page='Index'))
 
 
-@ app.route('/<page>', methods=['GET'])
+@app.route('/<page>', methods=['GET'])
 def show_page(page):
     file = get_filename(page)
     if not os.path.exists(file):
@@ -89,6 +89,11 @@ def show_page(page):
                              'tables', 'meta'])
     return render_template('page.html', title=page, content=html,
                            pages=get_pages(), tags=get_tags())
+
+
+@app.route('/images/<filename>', methods=['GET'])
+def send_image(filename):
+    return send_from_directory(os.path.join(app.config['DATADIR'], 'images'), filename)
 
 
 @app.route('/tag/<tag>', methods=['GET'])

@@ -61,11 +61,11 @@ Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam praesentium solut
 
 ## Test images
 
-![xs](../static/2761183_460s.jpg)
+![s](images/2761183_460s.jpg)
+![xs](images/2761183_460s.jpg)
 
-![s](../static/2761183_460s.jpg)
+![](images/2761183_460s.jpg)
 
-![](../static/2761183_460s.jpg)
 
 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam praesentium soluta doloremque eaque, libero autem placeat quos repudiandae cupiditate ab reprehenderit iure neque suscipit, sunt eum nesciunt! In, eius suscipit!
 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quam praesentium soluta doloremque eaque, libero autem placeat quos repudiandae cupiditate ab reprehenderit iure neque suscipit, sunt eum nesciunt! In, eius suscipit!

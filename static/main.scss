@@ -85,12 +85,14 @@ blockquote {
 }
 
 img {
+    height: 513px;
+
     &[alt="xs"] {
-        width: 100px;
+        height: 125px;
     }
 
     &[alt="s"] {
-        width: 250px;
+        height: 305px;
     }
 }
 
