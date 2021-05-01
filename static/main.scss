@@ -23,6 +23,16 @@ main {
 
 p {
     margin: 0;
+    text-indent: 1rem;
+}
+
+blockquote > p:first-of-type,
+hr + p,
+h1 + p,
+h2 + p,
+h3 + p,
+h4 + p {
+    text-indent: 0;
 }
 
 h1 {
@@ -78,10 +88,6 @@ blockquote {
     margin-bottom: $line-height - $blockquote-border / 2;
     margin-top: $line-height - $blockquote-border / 2;
     padding: $line-height - $blockquote-border / 2;
-
-    p {
-        margin: 0;
-    }
 }
 
 img {
