@@ -14,6 +14,23 @@ body {
     line-height: $line-height;
     padding: 0;
     margin: 0;
+
+    &.handouts {
+        flex-direction: column;
+        padding: 2rem;
+
+        .handout {
+            margin: 1rem;
+
+            &:hover button {
+                display: initial;
+            }
+        }
+
+        button {
+            display: none;
+        }
+    }
 }
 
 nav,
@@ -155,4 +172,38 @@ hr {
         position: relative;
         top: 3px;
     }
+}
+
+.handout {
+    border: 1px solid hsla(0, 0%, 65%, 1);
+    padding: 1rem;
+    position: relative;
+
+    p {
+        text-indent: 0;
+    }
+
+    button {
+        -webkit-appearance: none;
+        background: hsla(0, 0%, 98%, 1);
+        border: 1px solid hsla(0, 0%, 65%, 1);
+        border-radius: 5px;
+        font-family: $system-sans;
+        padding: 0.5rem;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+}
+
+.print {
+    -webkit-appearance: none;
+    background: hsla(0, 0%, 98%, 1);
+    border: 1px solid hsla(0, 0%, 65%, 1);
+    border-radius: 5px;
+    font-family: $system-sans;
+    padding: 0.5rem;
+    position: absolute;
+    right: 50px;
+    top: 20px;
 }

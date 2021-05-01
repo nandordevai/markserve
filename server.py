@@ -103,6 +103,11 @@ def show_tags(tag):
                            all_pages=get_pages())
 
 
+@app.route('/handouts', methods=['GET'])
+def handouts():
+    return render_template('handouts.html')
+
+
 if __name__ == '__main__':
     build_tag_db()
     app.run(host='localhost')
