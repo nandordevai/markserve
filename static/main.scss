@@ -4,6 +4,7 @@ $system-serif: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roma
     "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 $line-height: 26px;
 $blockquote-border: 2px;
+$border-color: hsla(0, 0%, 65%, 1);
 
 body {
     // background: linear-gradient(to bottom, rgba(32, 160, 255, 0.35) 1px, transparent 1px);
@@ -48,8 +49,22 @@ hr + p,
 h1 + p,
 h2 + p,
 h3 + p,
-h4 + p {
+h4 + p,
+.toc + p {
     text-indent: 0;
+}
+
+.toc {
+    margin-bottom: $line-height;
+
+    ul {
+        list-style-type: none;
+        padding-left: 1rem;
+    }
+
+    & > ul {
+        padding: 0;
+    }
 }
 
 h1 {
@@ -68,8 +83,8 @@ h2 {
 
 h3 {
     font-size: 18.7px;
-    margin-bottom: 0;
-    margin-top: $line-height;
+    margin-bottom: 0.5px;
+    margin-top: calc(#{$line-height} - 0.5px);
 }
 
 h4 {
@@ -100,7 +115,7 @@ main {
 
 blockquote {
     background: hsla(0, 0%, 98%, 1);
-    border: $blockquote-border solid hsla(0, 0%, 65%, 1);
+    border: $blockquote-border solid $border-color;
     margin: 0;
     margin-bottom: $line-height - $blockquote-border / 2;
     margin-top: $line-height - $blockquote-border / 2;
@@ -108,14 +123,16 @@ blockquote {
 }
 
 img {
-    height: 513px;
+    display: block;
+    height: 493px;
+    margin: $line-height auto $line-height auto;
 
     &[alt="xs"] {
-        height: 125px;
+        height: 104px;
     }
 
     &[alt="s"] {
-        height: 305px;
+        height: 287px;
     }
 }
 
@@ -143,11 +160,11 @@ img {
 }
 
 hr {
-    background: hsla(0, 0%, 0%, 1);
+    background: black;
     background-image: linear-gradient(to right, white, black 20%, black 80%, white 100%);
     border: 0;
     height: 1px;
-    margin: 38px 0 39px;
+    margin: 33px 0 44px;
 
     &::after {
         background: white;
@@ -175,18 +192,22 @@ hr {
 }
 
 .handout {
-    border: 1px solid hsla(0, 0%, 65%, 1);
+    border: 1px solid $border-color;
     padding: 1rem;
     position: relative;
 
     p {
         text-indent: 0;
+
+        &:first-of-type {
+            margin-bottom: $line-height;
+        }
     }
 
     button {
         -webkit-appearance: none;
         background: hsla(0, 0%, 98%, 1);
-        border: 1px solid hsla(0, 0%, 65%, 1);
+        border: 1px solid $border-color;
         border-radius: 5px;
         font-family: $system-sans;
         padding: 0.5rem;
@@ -199,11 +220,34 @@ hr {
 .print {
     -webkit-appearance: none;
     background: hsla(0, 0%, 98%, 1);
-    border: 1px solid hsla(0, 0%, 65%, 1);
+    border: 1px solid $border-color;
     border-radius: 5px;
     font-family: $system-sans;
     padding: 0.5rem;
     position: absolute;
     right: 50px;
     top: 20px;
+}
+
+ul,
+ol {
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+table {
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+    margin-bottom: $line-height;
+    margin-top: $line-height;
+}
+
+thead,
+tr {
+    height: $line-height;
+}
+
+th,
+td {
+    padding: 0;
 }

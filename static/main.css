@@ -36,8 +36,20 @@ hr + p,
 h1 + p,
 h2 + p,
 h3 + p,
-h4 + p {
+h4 + p,
+.toc + p {
   text-indent: 0;
+}
+
+.toc {
+  margin-bottom: 26px;
+}
+.toc ul {
+  list-style-type: none;
+  padding-left: 1rem;
+}
+.toc > ul {
+  padding: 0;
 }
 
 h1 {
@@ -56,8 +68,8 @@ h2 {
 
 h3 {
   font-size: 18.7px;
-  margin-bottom: 0;
-  margin-top: 26px;
+  margin-bottom: 0.5px;
+  margin-top: calc(26px - 0.5px);
 }
 
 h4 {
@@ -95,13 +107,15 @@ blockquote {
 }
 
 img {
-  height: 513px;
+  display: block;
+  height: 493px;
+  margin: 26px auto 26px auto;
 }
 img[alt=xs] {
-  height: 125px;
+  height: 104px;
 }
 img[alt=s] {
-  height: 305px;
+  height: 287px;
 }
 
 .hidden {
@@ -130,7 +144,7 @@ hr {
   background-image: linear-gradient(to right, white, black 20%, black 80%, white 100%);
   border: 0;
   height: 1px;
-  margin: 38px 0 39px;
+  margin: 33px 0 44px;
 }
 hr::after {
   background: white;
@@ -163,6 +177,9 @@ hr::after {
 .handout p {
   text-indent: 0;
 }
+.handout p:first-of-type {
+  margin-bottom: 26px;
+}
 .handout button {
   -webkit-appearance: none;
   background: #fafafa;
@@ -185,4 +202,27 @@ hr::after {
   position: absolute;
   right: 50px;
   top: 20px;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+table {
+  -webkit-border-horizontal-spacing: 0;
+  -webkit-border-vertical-spacing: 0;
+  margin-bottom: 26px;
+  margin-top: 26px;
+}
+
+thead,
+tr {
+  height: 26px;
+}
+
+th,
+td {
+  padding: 0;
 }/*# sourceMappingURL=main.css.map */

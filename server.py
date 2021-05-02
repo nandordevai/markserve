@@ -4,6 +4,7 @@ from functools import reduce
 
 import markdown
 from markdown.extensions.wikilinks import WikiLinkExtension
+from markdown.extensions.toc import TocExtension
 from flask import Flask, render_template, url_for, redirect, abort, send_from_directory
 
 app = Flask(__name__)
@@ -86,7 +87,8 @@ def show_page(page):
     html = markdown.markdown(content, extensions=[
                              WikiLinkExtension(
                                  end_url='', build_url=url_builder),
-                             'tables', 'meta'])
+                             TocExtension(toc_depth='2-4'),
+                             'tables', 'meta', 'md_in_html', 'sane_lists'])
     return render_template('page.html', title=page, content=html,
                            pages=get_pages(), tags=get_tags())
 
