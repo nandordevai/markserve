@@ -16,8 +16,8 @@ app.config.update(
 tags = {}
 
 
-def get_filename(page):
-    return os.path.join(app.config['DATADIR'], '{}.md'.format(page))
+def get_filename(folder, page):
+    return os.path.join(app.config['DATADIR'], folder, '{}.md'.format(page))
 
 
 def add_file_entry(name):
@@ -75,9 +75,11 @@ def index():
     return redirect(url_for('show_page', page='Index'))
 
 
-@app.route('/<page>', methods=['GET'])
-def show_page(page):
-    file = get_filename(page)
+@app.route('/<page>', defaults={'folder': ''}, methods=['GET'])
+@app.route('/<folder>/<page>', methods=['GET'])
+def show_page(folder, page):
+    file = get_filename(folder, page)
+    print(file)
     if not os.path.exists(file):
         abort(404)
     try:
@@ -88,7 +90,8 @@ def show_page(page):
                              WikiLinkExtension(
                                  end_url='', build_url=url_builder),
                              TocExtension(toc_depth='2-4'),
-                             'tables', 'meta', 'md_in_html', 'sane_lists'])
+                             'tables', 'meta', 'md_in_html', 'sane_lists',
+                             'mdx_wikilink_plus'])
     return render_template('page.html', title=page, content=html,
                            pages=get_pages(), tags=get_tags())
 
