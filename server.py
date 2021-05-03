@@ -3,7 +3,6 @@ import os
 from functools import reduce
 
 import markdown
-from markdown.extensions.wikilinks import WikiLinkExtension
 from markdown.extensions.toc import TocExtension
 from flask import Flask, render_template, url_for, redirect, abort, send_from_directory
 
@@ -14,6 +13,17 @@ app.config.update(
     DEBUG=debug
 )
 tags = {}
+
+
+def url_builder(urlo, base, end, url_whitespace, url_case):
+    return urlo.path
+
+
+md_config = {
+    'mdx_wikilink_plus': {
+        'build_url': url_builder,
+    },
+}
 
 
 def get_filename(folder, page):
@@ -35,7 +45,8 @@ def get_tree(rootdir=app.config['DATADIR']):
         if path.endswith('/images'):
             continue
         folders = path[start:].split(os.sep)
-        subdir = dict.fromkeys([os.path.join(folders[-1], f[:-3])
+        current_dir = '' if folders == ['data'] else folders[-1]
+        subdir = dict.fromkeys([os.path.join(current_dir, f[:-3])
                                for f in files if not f.startswith('.')])
         parent = reduce(dict.get, folders[:-1], dir)
         parent[folders[-1]] = subdir
@@ -69,10 +80,6 @@ def build_tag_db():
                     tags[tag].append(file[:-3])
 
 
-def url_builder(label, base, end):
-    return label
-
-
 @app.route('/', methods=['GET'])
 def index():
     return redirect(url_for('show_page', page='Index'))
@@ -90,11 +97,10 @@ def show_page(folder, page):
     except IOError:
         abort(500)
     html = markdown.markdown(content, extensions=[
-                             WikiLinkExtension(
-                                 end_url='', build_url=url_builder),
                              TocExtension(toc_depth='2-4'),
                              'tables', 'meta', 'md_in_html', 'sane_lists',
-                             'mdx_wikilink_plus'])
+                             'mdx_wikilink_plus'],
+                             extension_configs=md_config)
     return render_template('page.html', title=page, content=html,
                            pages=get_tree(), tags=get_tags())
 
