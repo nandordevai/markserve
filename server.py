@@ -32,8 +32,11 @@ def get_tree(rootdir=app.config['DATADIR']):
     rootdir = rootdir.rstrip(os.sep)
     start = rootdir.rfind(os.sep) + 1
     for path, dirs, files in os.walk(rootdir):
+        if path.endswith('/images'):
+            continue
         folders = path[start:].split(os.sep)
-        subdir = dict.fromkeys([f[:-3] for f in files])
+        subdir = dict.fromkeys([os.path.join(folders[-1], f[:-3])
+                               for f in files if not f.startswith('.')])
         parent = reduce(dict.get, folders[:-1], dir)
         parent[folders[-1]] = subdir
     return dir[rootdir]
@@ -93,7 +96,7 @@ def show_page(folder, page):
                              'tables', 'meta', 'md_in_html', 'sane_lists',
                              'mdx_wikilink_plus'])
     return render_template('page.html', title=page, content=html,
-                           pages=get_pages(), tags=get_tags())
+                           pages=get_tree(), tags=get_tags())
 
 
 @app.route('/images/<filename>', methods=['GET'])

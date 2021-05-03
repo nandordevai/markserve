@@ -22,8 +22,15 @@
             {% endfor %}
         </nav>
         <nav class="pagelist">
-            {% for page in pages %}
-            <a href="/{{page}}">{{page}}</a>
+            {% for name, children in pages.items() recursive %}
+            {% if children == None %}
+            <a href="/{{name}}">{{name.rsplit('/')[-1]}}</a>
+            {% else %}
+            <span class="directory">{{name}}</span>
+            <div class="subdir">
+                {{ loop(children.items()) }}
+            </div>
+            {% endif %}
             {% endfor %}
         </nav>
     </aside>

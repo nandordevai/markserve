@@ -225,4 +225,8 @@ tr {
 th,
 td {
   padding: 0;
+}
+
+.subdir {
+  padding-left: 1rem;
 }/*# sourceMappingURL=main.css.map */
