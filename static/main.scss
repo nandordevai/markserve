@@ -1,3 +1,4 @@
+$show-vlines: false;
 $system-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
     "Helvetica Neue", sans-serif;
 $system-serif: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times,
@@ -7,13 +8,16 @@ $blockquote-border: 2px;
 $border-color: hsla(0, 0%, 65%, 1);
 
 body {
-    // background: linear-gradient(to bottom, rgba(32, 160, 255, 0.35) 1px, transparent 1px);
-    // background-size: 100% 26px;
+    @if ($show-vlines) {
+        background: linear-gradient(to bottom, rgba(32, 160, 255, 0.35) 1px, transparent 1px);
+        background-size: 100% 26px;
+    }
     display: flex;
     flex-direction: row;
     font-family: $system-serif;
     line-height: $line-height;
     padding: 0;
+    padding-top: $line-height;
     margin: 0;
 
     &.handouts {
@@ -34,7 +38,6 @@ body {
     }
 }
 
-nav,
 main {
     padding: $line-height 3rem;
 }
@@ -150,8 +153,10 @@ img {
         cursor: pointer;
         display: inline-block;
         height: $line-height;
-        padding: 0.5rem 1rem;
-        width: 3rem;
+        margin-right: 1rem;
+        padding: 7px calc(#{$line-height} / 2) 4px;
+        text-align: center;
+        // width: 3rem;
 
         &.active {
             border-bottom: 4px solid hsla(0, 0, 60%, 1);
@@ -180,7 +185,7 @@ hr {
 
 .end {
     font-size: 16px;
-    padding-top: 40px;
+    padding-top: 43px;
     text-align: center;
 
     span {
@@ -254,4 +259,13 @@ td {
 
 .subdir {
     padding-left: 1rem;
+}
+
+.directory {
+    padding-top: calc(#{$line-height} / 2);
+}
+
+.pagelist {
+    padding-left: calc(#{$line-height} * 1.5);
+    padding-right: 4rem;
 }

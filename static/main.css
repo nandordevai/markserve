@@ -5,6 +5,7 @@ body {
   font-family: "Iowan Old Style", "Apple Garamond", Baskerville, "Times New Roman", "Droid Serif", Times, "Source Serif Pro", serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   line-height: 26px;
   padding: 0;
+  padding-top: 26px;
   margin: 0;
 }
 body.handouts {
@@ -21,7 +22,6 @@ body.handouts button {
   display: none;
 }
 
-nav,
 main {
   padding: 26px 3rem;
 }
@@ -132,8 +132,9 @@ img[alt=s] {
   cursor: pointer;
   display: inline-block;
   height: 26px;
-  padding: 0.5rem 1rem;
-  width: 3rem;
+  margin-right: 1rem;
+  padding: 7px calc(26px / 2) 4px;
+  text-align: center;
 }
 .tagselector span.active {
   border-bottom: 4px solid #999999;
@@ -159,7 +160,7 @@ hr::after {
 
 .end {
   font-size: 16px;
-  padding-top: 40px;
+  padding-top: 43px;
   text-align: center;
 }
 .end span {
@@ -229,4 +230,13 @@ td {
 
 .subdir {
   padding-left: 1rem;
+}
+
+.directory {
+  padding-top: calc(26px / 2);
+}
+
+.pagelist {
+  padding-left: calc(26px * 1.5);
+  padding-right: 4rem;
 }/*# sourceMappingURL=main.css.map */

@@ -26,7 +26,7 @@
             {% if children == None %}
             <a href="/{{name}}">{{name.rsplit('/')[-1]}}</a>
             {% else %}
-            <span class="directory">{{name}}</span>
+            <div class="directory">{{name}}</div>
             <div class="subdir">
                 {{ loop(children.items()) }}
             </div>
