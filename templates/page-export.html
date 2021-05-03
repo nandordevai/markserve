@@ -6,25 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="stylesheet" href="/static/main.css">
-    <script src="/static/app.js"></script>
+    <link rel="stylesheet" href="{{root}}static/main.css">
 </head>
 
 <body>
     <aside>
-        <div class="tagselector">
-            <span class="tags">Tags</span>
-            <span class="pages active">Pages</span>
-        </div>
-        <nav class="taglist hidden">
-            {% for tag in tags %}
-            <a href="/tag/{{tag}}">{{tag}}</a>
-            {% endfor %}
-        </nav>
         <nav class="pagelist">
             {% for name, children in pages.items() recursive %}
             {% if children == None %}
-            <a href="/{{name}}">{{name.rsplit('/')[-1]}}</a>
+            <a href="{{root}}{{name}}.html">{{name.rsplit('/')[-1]}}</a>
             {% else %}
             <div class="directory">{{name}}</div>
             <div class="subdir">
@@ -32,15 +22,12 @@
             </div>
             {% endif %}
             {% endfor %}
-            <hr>
-            <a href="/export">Export all</a>
         </nav>
     </aside>
     <main>
         {{content|safe}}
         <p class="end">&sext; <span>&sext;</span> &sext;</p>
     </main>
-    <button class="print hidden">Print queue</button>
 </body>
 
 </html>

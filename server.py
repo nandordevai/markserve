@@ -1,16 +1,18 @@
 import codecs
 import os
+import shutil
 from functools import reduce
 
 import markdown
 from markdown.extensions.toc import TocExtension
-from flask import Flask, render_template, url_for, redirect, abort, send_from_directory
+from flask import Flask, render_template, url_for, redirect, abort, send_from_directory, Response
 
 app = Flask(__name__)
 debug = True
 app.config.update(
     DATADIR='data',
-    DEBUG=debug
+    DEBUG=debug,
+    EXPORTDIR='export',
 )
 tags = {}
 
@@ -19,9 +21,19 @@ def url_builder(urlo, base, end, url_whitespace, url_case):
     return urlo.path
 
 
+def url_builder_export(urlo, base, end, url_whitespace, url_case):
+    return urlo.path + '.html'
+
+
 md_config = {
     'mdx_wikilink_plus': {
         'build_url': url_builder,
+    },
+}
+
+md_config_export = {
+    'mdx_wikilink_plus': {
+        'build_url': url_builder_export,
     },
 }
 
@@ -80,6 +92,26 @@ def build_tag_db():
                     tags[tag].append(file[:-3])
 
 
+def export_file(path):
+    root = '../' if '/' in path else './'
+    source = os.path.join(app.config['DATADIR'], '{}.md'.format(path))
+    destination = codecs.open(os.path.join(
+        app.config['EXPORTDIR'], '{}.html'.format(path)), 'w', 'utf-8')
+    if not os.path.exists(source):
+        abort(404)
+    try:
+        md_content = codecs.open(source, 'r', 'utf-8').read()
+    except IOError:
+        abort(500)
+    html = markdown.markdown(md_content, extensions=[
+                             TocExtension(toc_depth='2-4'),
+                             'tables', 'meta', 'md_in_html', 'sane_lists',
+                             'mdx_wikilink_plus'],
+                             extension_configs=md_config_export)
+    destination.write(render_template('page-export.html', title='test', content=html,
+                                      pages=get_tree(), tags=get_tags(), root=root))
+
+
 @app.route('/', methods=['GET'])
 def index():
     return redirect(url_for('show_page', page='Index'))
@@ -89,7 +121,6 @@ def index():
 @app.route('/<folder>/<page>', methods=['GET'])
 def show_page(folder, page):
     file = get_filename(folder, page)
-    print(file)
     if not os.path.exists(file):
         abort(404)
     try:
@@ -120,6 +151,28 @@ def show_tags(tag):
 @app.route('/handouts', methods=['GET'])
 def handouts():
     return render_template('handouts.html')
+
+
+@app.route('/export', methods=['GET'])
+def export_all():
+    if not os.path.exists(app.config['EXPORTDIR']):
+        os.mkdir(app.config['EXPORTDIR'])
+        os.mkdir(os.path.join(app.config['EXPORTDIR'], 'static'))
+    shutil.copy('static/main.css',
+                os.path.join(app.config['EXPORTDIR'], 'static'))
+    shutil.copy('static/app.js',
+                os.path.join(app.config['EXPORTDIR'], 'static'))
+    shutil.copy('static/handouts.js',
+                os.path.join(app.config['EXPORTDIR'], 'static'))
+    shutil.copytree(os.path.join(app.config['DATADIR'], 'images'),
+                    os.path.join(app.config['EXPORTDIR'], 'images'))
+    for folder, files in get_tree().items():
+        if files is not None:
+            os.mkdir(os.path.join(app.config['EXPORTDIR'], folder))
+            [export_file(f) for f in files.keys()]
+        else:
+            export_file(folder)
+    return Response(status=200)
 
 
 if __name__ == '__main__':
