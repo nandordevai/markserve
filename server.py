@@ -155,20 +155,18 @@ def handouts():
 
 @app.route('/export', methods=['GET'])
 def export_all():
-    if not os.path.exists(app.config['EXPORTDIR']):
-        os.mkdir(app.config['EXPORTDIR'])
-        os.mkdir(os.path.join(app.config['EXPORTDIR'], 'static'))
+    ed = app.config['EXPORTDIR']
+    if os.path.exists(ed):
+        os.rmdir(ed)
+    os.mkdir(ed)
+    os.mkdir(os.path.join(ed, 'static'))
     shutil.copy('static/main.css',
-                os.path.join(app.config['EXPORTDIR'], 'static'))
-    shutil.copy('static/app.js',
-                os.path.join(app.config['EXPORTDIR'], 'static'))
-    shutil.copy('static/handouts.js',
-                os.path.join(app.config['EXPORTDIR'], 'static'))
+                os.path.join(ed, 'static'))
     shutil.copytree(os.path.join(app.config['DATADIR'], 'images'),
-                    os.path.join(app.config['EXPORTDIR'], 'images'))
+                    os.path.join(ed, 'images'))
     for folder, files in get_tree().items():
         if files is not None:
-            os.mkdir(os.path.join(app.config['EXPORTDIR'], folder))
+            os.mkdir(os.path.join(ed, folder))
             [export_file(f) for f in files.keys()]
         else:
             export_file(folder)
