@@ -95,10 +95,9 @@ def build_tag_db():
 def export_file(path):
     root = '../' if '/' in path else './'
     source = os.path.join(app.config['DATADIR'], '{}.md'.format(path))
+    title = path.replace('/', ' – ')
     destination = codecs.open(os.path.join(
         app.config['EXPORTDIR'], '{}.html'.format(path)), 'w', 'utf-8')
-    if not os.path.exists(source):
-        abort(404)
     try:
         md_content = codecs.open(source, 'r', 'utf-8').read()
     except IOError:
@@ -108,7 +107,7 @@ def export_file(path):
                              'tables', 'meta', 'md_in_html', 'sane_lists',
                              'mdx_wikilink_plus'],
                              extension_configs=md_config_export)
-    destination.write(render_template('page-export.html', title='test', content=html,
+    destination.write(render_template('page-export.html', title=title, content=html,
                                       pages=get_tree(), tags=get_tags(), root=root))
 
 
@@ -157,11 +156,9 @@ def handouts():
 def export_all():
     ed = app.config['EXPORTDIR']
     if os.path.exists(ed):
-        os.rmdir(ed)
+        shutil.rmtree(ed)
     os.mkdir(ed)
-    os.mkdir(os.path.join(ed, 'static'))
-    shutil.copy('static/main.css',
-                os.path.join(ed, 'static'))
+    shutil.copy('static/main.css', ed)
     shutil.copytree(os.path.join(app.config['DATADIR'], 'images'),
                     os.path.join(ed, 'images'))
     for folder, files in get_tree().items():

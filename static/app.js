@@ -23,6 +23,10 @@ window.onload = () => {
         window.location = '/handouts';
     });
 
+    document.querySelector('.export').addEventListener('click', () => {
+        window.location = '/export';
+    });
+
     const currentLength = localStorage.getItem('markserve.printQueueLength') || 0;
     if (currentLength > 0) {
         document.querySelector('.print').classList.remove('hidden');
